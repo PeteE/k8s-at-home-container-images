@@ -1,0 +1,16 @@
+file:
+  /app/tinyproxy/tinyproxy.conf:
+    exists: true
+    owner: kah
+    group: kah
+    linked-to: /config/tinyproxy.conf
+    filetype: symlink
+    contains: []
+port:
+  tcp:8888:
+    listening: true
+    ip:
+    - 0.0.0.0
+process:
+  tinyproxy:
+    running: true
