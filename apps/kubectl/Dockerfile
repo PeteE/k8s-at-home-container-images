@@ -1,4 +1,4 @@
-FROM ubuntu:focal-20210723
+FROM ubuntu:focal
 
 ARG VERSION
 
@@ -16,6 +16,7 @@ ENV \
 RUN \
   apt-get -qq update \
   && apt-get -qq install -y --no-install-recommends \
+    bash \
     ca-certificates \
     curl \
     jq \

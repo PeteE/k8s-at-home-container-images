@@ -47,3 +47,8 @@ EXPOSE 7878
 
 COPY ./apps/radarr/entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
+
+LABEL \
+  org.opencontainers.image.title="Radarr" \
+  org.opencontainers.image.source="https://github.com/Radarr/Radarr" \
+  org.opencontainers.image.version="${VERSION}"

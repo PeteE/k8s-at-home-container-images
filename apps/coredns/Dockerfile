@@ -1,4 +1,4 @@
-FROM docker.io/golang:1.17.1-alpine as builder
+FROM docker.io/golang:1.17.6-alpine as builder
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
@@ -51,11 +51,6 @@ FROM gcr.io/distroless/static:nonroot
 
 ARG VERSION
 
-LABEL org.opencontainers.image.title="CoreDNS"
-LABEL org.opencontainers.image.authors="Anthony Rabbito <hello@anthonyrabbito.com>"
-LABEL org.opencontainers.image.version="${VERSION}"
-LABEL coredns-external-plugins="alternate, mdns, wgsd, k8s_gateway"
-
 COPY --from=builder /go/src/coredns/coredns /coredns
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 
@@ -67,5 +62,8 @@ EXPOSE 53 53/udp
 
 CMD ["/coredns", "-conf", "/config/Corefile"]
 
-LABEL "maintainer"="Devin Buhl <devin.kray@gmail.com>, Bernd Schorgers <me@bjw-s.dev>"
-LABEL "org.opencontainers.image.source"="https://github.com/k8s-at-home/container-images"
+LABEL org.opencontainers.image.title="CoreDNS" \
+      org.opencontainers.image.source="https://github.com/coredns/coredns" \
+      org.opencontainers.image.authors="Anthony Rabbito <hello@anthonyrabbito.com>" \
+      org.opencontainers.image.version="${VERSION}" \
+      coredns-external-plugins="alternate, mdns, wgsd, k8s_gateway"

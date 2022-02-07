@@ -13,6 +13,7 @@ RUN \
   && \
   apt-get -qq install -y \
     libicu66 \
+    sqlite3 \
   && \
   case "${TARGETPLATFORM}" in \
     'linux/amd64') export ARCH='x64' ;; \
@@ -46,3 +47,8 @@ EXPOSE 9696
 
 COPY ./apps/prowlarr/entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
+
+LABEL \
+  org.opencontainers.image.title="Prowlarr" \
+  org.opencontainers.image.source="https://github.com/Prowlarr/Prowlarr" \
+  org.opencontainers.image.version="${VERSION}"

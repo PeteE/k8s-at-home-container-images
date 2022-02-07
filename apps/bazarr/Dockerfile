@@ -18,6 +18,7 @@ RUN \
     ffmpeg \
     unrar \
     unzip \
+    dos2unix \
     ${EXTRA_INSTALL_ARG} \
   && \
   ln -s /usr/bin/python3 /usr/bin/python \
@@ -44,3 +45,8 @@ EXPOSE 6767
 
 COPY ./apps/bazarr/entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
+
+LABEL \
+  org.opencontainers.image.title="Bazarr" \
+  org.opencontainers.image.source="https://github.com/morpheus65535/bazarr" \
+  org.opencontainers.image.version="${VERSION}"

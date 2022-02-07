@@ -5,23 +5,27 @@ ARG VERSION
 
 USER root
 
-# https://download.mono-project.com/repo/ubuntu/dists/focal/snapshots/
-ENV MONO_VERSION=6.12.0.122
-
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # hadolint ignore=DL3008,DL3015,SC2086
 RUN \
+  curl -L \
+    "https://mediaarea.net/repo/deb/repo-mediaarea_1.0-12_all.deb" \
+    -o /tmp/key.deb \
+  && dpkg -i /tmp/key.deb \
+  && echo "deb https://mediaarea.net/repo/deb/ubuntu focal main" | tee /etc/apt/sources.list.d/mediaarea.list \
+  && \
   apt-get -qq update \
   && apt-get -qq install -y gnupg \
 	&& \
   apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF \
-  && echo "deb https://download.mono-project.com/repo/ubuntu focal/snapshots/${MONO_VERSION} main" | tee /etc/apt/sources.list.d/mono-official.list \
+  && echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | tee /etc/apt/sources.list.d/mono-official.list \
   && apt-get -qq update \
   && \
   apt-get -qq install -y \
     ca-certificates \
-    mono-complete=${MONO_VERSION}\* \
+    mono-complete \
+    ca-certificates-mono \
     libmediainfo0v5 \
   && \
   curl -fsSL -o /tmp/sonarr.tar.gz \
@@ -54,3 +58,8 @@ EXPOSE 8989
 
 COPY ./apps/sonarr/entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
+
+LABEL \
+  org.opencontainers.image.title="Sonarr" \
+  org.opencontainers.image.source="https://github.com/Sonarr/Sonarr" \
+  org.opencontainers.image.version="${VERSION}"

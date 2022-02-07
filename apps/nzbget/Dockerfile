@@ -40,6 +40,7 @@ RUN \
     /tmp/* \
     /var/lib/apt/lists/* \
     /var/tmp/ \
+  && curl -fsSl -o /app/cacert.pem -L "https://curl.haxx.se/ca/cacert.pem" \
   && chown -R kah:kah /app \
   && chmod -R u=rwX,go=rX /app \
   && printf "umask %d" "${UMASK}" >> /etc/bash.bashrc \
@@ -51,3 +52,8 @@ EXPOSE 6789
 
 COPY ./apps/nzbget/entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
+
+LABEL \
+  org.opencontainers.image.title="NZBGet" \
+  org.opencontainers.image.source="https://github.com/nzbget/nzbget" \
+  org.opencontainers.image.version="${VERSION}"

@@ -14,6 +14,7 @@ RUN \
   apt-get -qq install -y \
     libchromaprint-tools \
     libicu66 \
+    sqlite3 \
   && \
   case "${TARGETPLATFORM}" in \
     'linux/amd64') export ARCH='x64' ;; \
@@ -48,3 +49,8 @@ EXPOSE 8686
 
 COPY ./apps/lidarr/entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
+
+LABEL \
+  org.opencontainers.image.title="Lidarr" \
+  org.opencontainers.image.source="https://github.com/Lidarr/Lidarr" \
+  org.opencontainers.image.version="${VERSION}"

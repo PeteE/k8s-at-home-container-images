@@ -12,7 +12,9 @@ RUN \
   apt-get -qq update \
   && \
   apt-get -qq install -y \
+    libchromaprint-tools \
     libicu66 \
+    sqlite3 \
   && \
   case "${TARGETPLATFORM}" in \
     'linux/amd64') export ARCH='x64' ;; \
@@ -46,3 +48,8 @@ EXPOSE 8787
 
 COPY ./apps/readarr/entrypoint.sh /entrypoint.sh
 CMD ["/entrypoint.sh"]
+
+LABEL \
+  org.opencontainers.image.title="Readarr" \
+  org.opencontainers.image.source="https://github.com/Readarr/Readarr" \
+  org.opencontainers.image.version="${VERSION}"
