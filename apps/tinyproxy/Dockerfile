@@ -1,4 +1,4 @@
-FROM ghcr.io/k8s-at-home/ubuntu:vfocal-20210723
+FROM ghcr.io/k8s-at-home/ubuntu:latest
 
 # set version label
 ARG VERSION
